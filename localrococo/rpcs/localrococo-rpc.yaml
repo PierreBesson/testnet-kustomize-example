@@ -1,0 +1,17 @@
+node:
+  role: full
+  replicas: 1
+
+ingress:
+  enabled: true
+  rules:
+    - host: rococo-rpc.example.com
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: versi-rpc-node
+              port:
+                number: 9944

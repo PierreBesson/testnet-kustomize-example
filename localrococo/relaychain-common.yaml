@@ -1,0 +1,27 @@
+image:
+  repository: parity/polkadot
+  tag: latest
+  pullPolicy: Always
+
+initContainer:
+  debug: true
+
+node:
+  chain: rococo-local
+  replicas: 1
+  chainData:
+    pruning: 1000
+    volumeSize: 2Gi
+  podManagementPolicy: Parallel
+  allowUnsafeRpcMethods: true
+  customChainspecUrl: http://chainspecs/rococo-local.json
+  forceDownloadChainspec: true
+  #telemetryUrls:
+  #  - "ws://telemetry-shard.telemetry/submit/ 1"
+extraInitContainers:
+  - name: dump-session-keys
+    image: docker.io/paritytech/substrate-session-keys-grabber:d17032f1-20221202
+    args: ["/keystore"]
+    volumeMounts:
+      - mountPath: /keystore
+        name: chain-keystore

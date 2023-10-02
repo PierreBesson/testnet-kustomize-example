@@ -1,0 +1,8 @@
+node:
+  chain: asset-hub
+  role: collator
+  replicas: 2
+  customChainspecUrl:  "http://chainspecs/asset-hub.json"
+extraLabels:
+  paraId: "1000"
+  ss58Format: "0" # Polkadot

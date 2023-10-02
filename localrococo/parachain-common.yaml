@@ -1,0 +1,23 @@
+image:
+  repository: parity/polkadot-parachain
+  tag: latest
+  pullPolicy: Always
+
+initContainer:
+  debug: true
+
+node:
+  chainData: &chainData
+    volumeSize: 2Gi
+  command: "/usr/local/bin/polkadot-parachain"
+  forceDownloadChainspec: true
+  isParachain: true
+  collatorRelayChain:
+    customChainspecUrl: "http://chainspecs/rococo-local.json"
+    chainData: *chainData
+  persistGeneratedNodeKey: true
+  allowUnsafeRpcMethods: true
+  flags:
+    - "--allow-private-ipv4"
+  #telemetryUrls:
+  #  - "ws://telemetry-shard.telemetry/submit/ 1"

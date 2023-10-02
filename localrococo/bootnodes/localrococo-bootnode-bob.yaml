@@ -1,0 +1,7 @@
+node:
+  node:
+    role: authority
+    flags:
+      - "--bob"
+  extraLabels:
+    validatorAccount: "5HpG9w8EBLe5XCrbczpwq5TSXvedjrBGCwqxK1iQ7qUsSWFc" # Bob address

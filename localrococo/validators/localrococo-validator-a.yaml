@@ -1,0 +1,17 @@
+node:
+  role: authority
+  replicas: 1
+  chainData:
+    pruning: archive
+    annotations:
+      resize.topolvm.io/threshold: 20%
+      resize.topolvm.io/storage_limit: 100Gi
+  keys: []
+#      - type: gran
+#        scheme: "ed25519"
+#        seed: "test test test test test test test test test test test junk"
+#        extraDerivation: "//validator//${HOSTNAME}"
+#      - type: babe
+#        scheme: "sr25519"
+#        seed: "test test test test test test test test test test test junk"
+#        extraDerivation: "//validator//${HOSTNAME}"

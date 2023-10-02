@@ -1,0 +1,7 @@
+node:
+  node:
+    role: authority
+    flags:
+      - "--alice"
+  extraLabels:
+    validatorAccount: "5GNJqTPyNqANBkUVMN1LPPrxXnFouWXoe2wNSmmEoLctxiZY" # Alice address

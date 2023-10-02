@@ -1,0 +1,22 @@
+chainspecs:
+  - name: local-rococo
+    image: parity/polkadot:v1.1.0
+    script: |
+      polkadot build-spec --chain rococo-local --disable-default-bootnode --raw  > /dir/rococo-local.json
+  - name: asset-hub
+    image: parity/polkadot-parachain:1.1.0
+    runtimeName: local-rococo
+    script: |
+      polkadot-parachain build-spec --chain statemint-local --disable-default-bootnode > /dir/asset-hub-plain.json;
+      polkadot-parachain build-spec --chain /dir/asset-hub-plain.json --disable-default-bootnode --raw  > /dir/asset-hub.json;
+  - name: tick
+    image: parity/polkadot-parachain:1.1.0
+    runtimeName: local-rococo
+    script: |
+      polkadot-parachain build-spec --chain staging > /dir/tick-plain.json;
+        sed 's/Staging Rococo Parachain Local/Tick/' -i /dir/tick-plain.json;
+        sed 's/staging_testnet/tick/' -i /dir/tick-plain.json;
+        #sed 's/"relay_chain": "rococo-local"/"relay_chain": "rococo"/' -i /dir/tick-dev-plain-${i}.json;
+        sed 's/"para_id": 1000/"para_id": 2000/' -i /dir/tick-plain.json;
+        sed 's/"parachainId": 1000/"parachainId": 2000/' -i /dir/tick-plain.json;
+      polkadot-parachain build-spec --chain /dir/tick-plain.json --raw > /dir/tick.json;

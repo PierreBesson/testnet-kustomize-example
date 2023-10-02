@@ -1,0 +1,6 @@
+image:
+  repository: nginx
+  tag: stable
+  pullPolicy: IfNotPresent
+directory: "/dir"
+chainspecs: []

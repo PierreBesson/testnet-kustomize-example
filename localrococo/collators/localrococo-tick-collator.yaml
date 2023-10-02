@@ -1,0 +1,7 @@
+node:
+  chain: tick
+  role: collator
+  replicas: 2
+  customChainspecUrl:  "http://chainspecs/tick.json"
+extraLabels:
+  paraId: "2000"

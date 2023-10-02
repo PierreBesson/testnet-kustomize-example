@@ -1,0 +1,47 @@
+{{ $name := .Release.Name | trunc 63 | trimSuffix "-" }}
+{{ $directory := .Values.directory }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      run: {{ $name }}
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: {{ $name }}
+    spec:
+      volumes:
+      - name: dir
+        emptyDir: {}
+      containers:
+      - name: chainspec
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: dir
+          mountPath: /usr/share/nginx/html
+      initContainers:
+      {{- range .Values.chainspecs }}
+      - name: {{ .name }}
+        image: {{ .image }}
+        imagePullPolicy: IfNotPresent
+        command: [ "/bin/sh" ]
+        args:
+          - -c
+          - >
+            set -xe;
+            {{- .script | nindent 12 }}
+        volumeMounts:
+          - name: dir
+            mountPath: {{ $directory }}
+        securityContext:
+          runAsUser: 0
+      {{- end }}

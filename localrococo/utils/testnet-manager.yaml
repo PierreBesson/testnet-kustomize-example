@@ -1,0 +1,24 @@
+testnet-manager:
+  image:
+    repository: "paritytech/testnet-manager"
+    tag: latest
+    pullPolicy: Always
+
+  initContainer:
+    debug: true
+
+  secret:
+    # 0xe5be9a5092b81bca64be81d212e7f2f9eba183bb7a90954f7b76361f6edb5c0a is //Alice
+    SUDO_SEED: "0xe5be9a5092b81bca64be81d212e7f2f9eba183bb7a90954f7b76361f6edb5c0a"
+    DERIVATION_ROOT_SEED: "test test test test test test test test test test test junk"
+
+  configmap:
+    LOG_LEVEL: DEBUG
+    RELAY_CHAIN_RPC_URL: "ws://localrococo-rpc-node:9944"
+    RPC_NODE_URL_PATTERN: "NODE_NAME:9944"
+    HEALTHY_MIN_PEER_COUNT: "1"
+    TASKS_CRON_SCHEDULE: "0 0 30 2 *" # Every February 30th aka never
+    RELAY_CHAIN_CONSENSUS: poa
+
+  ingress:
+    enabled: false
